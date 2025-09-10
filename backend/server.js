@@ -1,10 +1,9 @@
 import express from "express";
+import testRoutes from "./routes/testRoutes.js";
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
+app.use("/", testRoutes);
 
 const PORT = 5000;
 
