@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
-import testRoutes from "./routes/testRoutes.js";
+import routeRoutes from "./routes/routeRoutes.js";
 
 dotenv.config();
 
@@ -10,7 +10,7 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use("/", testRoutes);
+app.use("/api/routes", routeRoutes);
 
 const PORT = 5000;
 
