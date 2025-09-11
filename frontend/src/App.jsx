@@ -8,26 +8,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import AddRouteForm from "./component/AddRouteForm";
 
 function App() {
   const [routes, setRoutes] = useState([]);
 
-  useEffect(() => {
-    const fetchRoutes = async () => {
-      try {
-        const response = await axios.get("/api/routes");
-        setRoutes(response.data);
-      } catch (error) {
-        console.error("Error fetching routes:", error);
-      }
-    };
+  const fetchRoutes = async () => {
+    try {
+      const response = await axios.get("/api/routes");
+      setRoutes(response.data);
+    } catch (error) {
+      console.error("Error fetching routes:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchRoutes();
   }, []);
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Bus Tracker App</h1>
+      <AddRouteForm onRouteAdded={fetchRoutes} />
       <h2 className="text-xl mb-2">Available Routes:</h2>
 
       <Table>
