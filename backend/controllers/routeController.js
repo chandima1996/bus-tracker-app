@@ -28,4 +28,50 @@ const getAllRoutes = async (req, res) => {
   }
 };
 
-export { createRoute, getAllRoutes };
+const getRouteById = async (req, res) => {
+  try {
+    const route = await Route.findById(req.params.id);
+    if (route) {
+      res.status(200).json(route);
+    } else {
+      res.status(404).json({ message: "Route not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error..." });
+  }
+};
+
+const updateRoute = async (req, res) => {
+  try {
+    const updatedRoute = await Route.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!updatedRoute) {
+      return res.status(404).json({ message: "Route not found." });
+    }
+    res.status(200).json(updatedRoute);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+const deleteRoute = async (req, res) => {
+  try {
+    const route = await Route.findByIdAndDelete(req.params.id);
+    if (route) {
+      res.status(200).json({ message: "Route deleted" });
+    } else {
+      res.status(404).json({ message: "Route not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export { createRoute, getAllRoutes, updateRoute, deleteRoute, getRouteById };
